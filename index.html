@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+    .strike {
+        text-decoration: line-through;
+        color: red;
+    }
+</style>
+<body>
+  
+    <div id="app">
+        <div class="container mt-5">
+            <h1 class="text-center mb-4">To-Do List</h1>
+    
+            <!-- Form untuk menambah kegiatan -->
+            <form class="mb-4" @submit.prevent>
+                <div class="form-group">
+                    <label for="kegiatan">Kegiatan:</label>
+                    <input type="text" class="form-control" id="kegiatan" placeholder="Masukkan kegiatan" v-model="activity">
+                </div>
+                <div class="form-group">
+                    <label for="waktu_mulai">Waktu Mulai:</label>
+                    <input type="text" class="form-control" id="waktu_mulai" placeholder="Contoh: 08:00" v-model="startTime">
+                </div>
+                <div class="form-group">
+                    <label for="waktu_selesai">Waktu Selesai:</label>
+                    <input type="text" class="form-control" id="waktu_selesai" placeholder="Contoh: 09:00" v-model="endTime">
+                </div>
+                <button type="submit" class="btn btn-primary" @click="addTodo">Tambahkan</button>
+            </form>
+    
+            <!-- Daftar kegiatan -->
+            <div class="card mb-3" v-for="item , index in todoLists">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span v-bind:class="{strike: item.done}">
+                            <h5 class="card-title">{{item.activity}}</h5>
+                            <p class="card-text">{{item.start}} - {{item.end}}</p>
+                        </span>  
+                        </div>
+                        <div>
+                            <button class="btn btn-success mr-2" @click="done(index)">Done</button>
+                            <button class="btn btn-danger" @click="del(index)">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+            <!-- Tambahkan kegiatan lain di sini -->
+        </div>
+    </div>
+
+    <script type="module">
+      import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+    
+      createApp({
+        data() {
+            return {
+                todoLists: [
+                        { start: '16:15', end: '17:00', activity: 'act1', done: false },
+                        { start: '16:15', end: '17:00', activity: 'act1', done: false },
+                        { start: '16:15', end: '17:00', activity: 'act1', done: false }
+                    ],
+                    activity: '',
+                    startTime:'',
+                    endTime:''
+            }
+        },
+        methods: {
+            del(index) {
+                this.todoLists.splice(index,1)
+            },
+            addTodo() {
+                let newTodo = {
+                    activity: this.activity,
+                    start: this.startTime,
+                    end: this.endTime,
+                    done:false
+                }
+                this.todoLists.push(newTodo)
+            },
+            done(index) {
+                this.todoLists[index].done = true
+            }
+        },
+      }).mount('#app')
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

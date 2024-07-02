@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <div id="app">
+        <ul v-for="item in todoLists">
+            <li>{{item.start}} - {{item.end}} | {{item.activity}}</li>
+        </ul>
+    </div>
+
+    <script type="module">
+        const { createApp, ref } = Vue
+
+        createApp({
+            data() {
+                return {
+                    todoLists: [
+                        { start: '16:15', end: '17:00', activity: 'act1', done: false },
+                        { start: '16:15', end: '17:00', activity: 'act1', done: false },
+                        { start: '16:15', end: '17:00', activity: 'act1', done: false }
+                    ],
+                }
+            },
+        }).mount('#app')
+    </script>
+</body>
+
+</html>
